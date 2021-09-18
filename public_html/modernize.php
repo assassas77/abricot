@@ -34,7 +34,9 @@ fclose($handle);
 foreach ($data as $row){
   $pattern = $row[0];
   $substitute = $row[1];
-  $resultat = preg_replace("/".$pattern."/U", $substitute, $resultat);
+  $pattern = '(;.*[ -])(p)([^£])';
+  $substitute = "$1b£$3";
+  $resultat = preg_replace("/$pattern/m", $substitute, $resultat);
 }
 
 // fin du traitement

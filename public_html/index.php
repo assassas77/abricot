@@ -1,3 +1,5 @@
+<a href="modernize.php">To modernize teochew</a>
+
 <?php header('Content-Type: text/html; charset=utf-8');
 if ($_POST["test"]){
   $resultat = $_POST["test"];
