@@ -30,19 +30,30 @@ while ($buffer = fgets($handle)){
 
 fclose($handle);
 
+// séparation du texte à traiter en un tableau de lignes
+$resultat = explode("\n", $resultat);
+
 // remplacement à partir du fichier externe
-foreach ($data as $row){
-  $pattern = $row[0];
-  $substitute = $row[1];
-  $pattern = '(;.*[ -])(p)([^£])';
-  $substitute = "$1b£$3";
-  $resultat = preg_replace("/$pattern/m", $substitute, $resultat);
+foreach($resultat as $key => $line){
+  if(preg_match("/^;/u",$line)){
+    foreach ($data as $row){
+      $pattern = $row[0];
+      $substitute = $row[1];
+    //  $pattern = '(;.*[ -])(p)([^£])';
+    //  $substitute = "$1b£$3";
+//      $pattern = "p";
+//      $substitute = "o";
+      $line = preg_replace("/$pattern/Uu", $substitute, $line);
+    }
+    $resultat[$key]=$line;
+  }
 }
+$resultat = implode("\n", $resultat);
 
 // fin du traitement
 	// retrait des doubles blancs
 $resultat = str_replace("  ", " ", $resultat);
-//$resultat = str_replace("£", "", $resultat);
+$resultat = str_replace("£", "", $resultat);
 ?>
 <html>
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
